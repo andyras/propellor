@@ -1,0 +1,19 @@
+*.out
+*~
+foo
+whoo
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+propellor
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
