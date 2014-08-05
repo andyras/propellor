@@ -1,8 +1,13 @@
+#include <complex>
 #include <Eigen/Eigen>
 #include <vector>
 
 #define TMPSIZE 10
 #define TMPTIMESTEPS 1000
+
+using std::cout;
+using std::cerr;
+using std::endl;
 
 class Parameters {
 private:
@@ -11,7 +16,10 @@ private:
   std::vector<Eigen::MatrixXcd> Rho_; // density matrix over time
 
 public:
-  Parameters();
+  Parameters(); // default constructor
+
+  Eigen::MatrixXcd Ham(); // gives Ham_
+  std::complex<double> Ham(int r, int c); // gives Ham_(r,c)
 };
 
 Parameters::Parameters() {
@@ -43,4 +51,18 @@ Parameters::Parameters() {
   for (unsigned int ii = 0; ii < Rho_.size(); ii++) {
     Rho_[ii].resize(TMPSIZE,TMPSIZE);
   }
+}
+
+Eigen::MatrixXcd Parameters::Ham() {
+  return Ham_;
+}
+
+std::complex<double> Parameters::Ham(int r, int c) {
+  if (r > (Ham_.rows() - 1)) {
+    cerr << "ERROR: row " << r << "beyond bounds of Hamiltonian." << endl;
+  }
+  if (c > (Ham_.cols() - 1)) {
+    cerr << "ERROR: column " << c << "beyond bounds of Hamiltonian." << endl;
+  }
+  return Ham_(r,c);
 }
