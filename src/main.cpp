@@ -1,8 +1,18 @@
+#include <Eigen/Eigen>
 #include <iostream>
 
-#include <Eigen/Eigen>
+#include "Parameters.hpp"
 
 int main(int argc, char ** argv) {
+  // initialize parameters /////////////////////////////////////////////////////
+  Parameters p;
+
+  // initialize Hamiltonian ////////////////////////////////////////////////////
+
+  // initialize wavefunction/DM ////////////////////////////////////////////////
+
+  // propagate /////////////////////////////////////////////////////////////////
+
   std::cout << "I am propellor, hear me roar." << std::endl;
   return 0;
 }
