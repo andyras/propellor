@@ -1,6 +1,6 @@
 ### This line should be just about all you have to change ######################
 # name of main executable
-BIN = dynamix
+BIN = propellor
 ################################################################################
 
 #DEBUG_MAKE = "foo"
@@ -13,29 +13,11 @@ LIBDIR = ./lib
 BINDIR = ./bin
 
 # compiler and archiver
-CPP = icpc
-AR = xiar
+CPP = g++-4.9
+AR = ar
 
 CPPFLAGS = -O3 -Wall -std=c++11 -fopenmp
-LDFLAGS = -lsundials_cvode -lsundials_nvecserial
-INCLUDES = -I$(INCDIR)
-
-# optional #####################################################################
-# comment this out if you do not want to add the boost serialization method
-CPPFLAGS += -D__BOOST_SERIALIZE__
-################################################################################
-
-# basic compiler-dependent flags
-ifeq ($(CPP),icpc)
-  CPPFLAGS += -fast -xHOST -no-prec-div -mkl -no-multibyte-chars
-  LDFLAGS += -mkl
-else # g++*
-  LDFLAGS += -liomp5
-  LDFLAGS += -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core
-  ifeq ($(shell hostname),tim.selfip.org)
-    LDFLAGS += -lpthread -lm
-  endif
-endif
+INCLUDES = -I$(INCDIR) -I/usr/local/Cellar/eigen/3.2.1/include/eigen3/
 
 ifdef DEBUG_MAKE
   CPPFLAGS += -pg -g -debug
@@ -52,8 +34,8 @@ SOURCES = $(wildcard $(SRCDIR)/*.cpp)
 OBJECTS = $(patsubst $(SRCDIR)/%.cpp,obj/%.o,$(SOURCES))
 
 # build the main executable; this should be listed first
-$(BIN): $(OBJECTS)
-	$(CPP) -o $@ $^ $(LDFLAGS) -fopenmp
+$(BINDIR)/$(BIN): $(OBJECTS) $(BINDIR)
+	$(CPP) -o $@ $(OBJECTS) $(LDFLAGS) -fopenmp
 
 # automatic rule for building objects
 $(OBJDIR)/%.o: %.cpp
@@ -66,13 +48,12 @@ $(OBJECTS): | $(OBJDIR)
 library: $(OBJECTS) $(LIBDIR)
 	find $(OBJDIR) -name *.o ! -name main.o | xargs $(AR) vrs $(LIBDIR)/lib$(BIN).a
 
-.PHONY: clean install uninstall $(BINDIR) $(OBJDIR) $(LIBDIR	)
+.PHONY: clean install uninstall $(BINDIR) $(OBJDIR) $(LIBDIR)
 
 clean:
-	rm -f $(BIN)
+	rm -rf $(BINDIR)
 	rm -rf $(OBJDIR)
 	rm -rf $(LIBDIR)
-	rm -rf $(BINDIR)
 
 install: $(BIN) | $(BINDIR)
 	cp dynamix $(BINDIR)
