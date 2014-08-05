@@ -15,11 +15,21 @@ private:
   std::vector<Eigen::VectorXcd> Psi_; // wavefunction over time
   std::vector<Eigen::MatrixXcd> Rho_; // density matrix over time
 
+  // flags
+  bool flagTimeIndependent_ = true;
+  bool flagWavefunction_ = true;
+
 public:
   Parameters(); // default constructor
 
   Eigen::MatrixXcd Ham(); // gives Ham_
   std::complex<double> Ham(int r, int c); // gives Ham_(r,c)
+
+  void propagate(); // evolves in time
+
+  // flag access functions
+  bool isTimeIndependent();
+  bool isWavefunction();
 };
 
 Parameters::Parameters() {
@@ -53,6 +63,14 @@ Parameters::Parameters() {
   }
 }
 
+bool Parameters::isTimeIndependent() {
+  return flagTimeIndependent_;
+}
+
+bool Parameters::isWavefunction() {
+  return flagWavefunction_;
+}
+
 Eigen::MatrixXcd Parameters::Ham() {
   return Ham_;
 }
@@ -65,4 +83,26 @@ std::complex<double> Parameters::Ham(int r, int c) {
     cerr << "ERROR: column " << c << "beyond bounds of Hamiltonian." << endl;
   }
   return Ham_(r,c);
+}
+
+void Parameters::propagate() {
+  if (isTimeIndependent()) {
+    // time-independent propagation
+    // diagonalize Ham_
+    if (isWavefunction()) {
+      // TI wavefunction propagation
+    }
+    else {
+      // TI density matrix propagation
+    }
+  }
+  else {
+    // time-dependent propagation
+    if (isWavefunction()) {
+      // TD wavefunction propagation
+    }
+    else {
+      // TD density matrix propagation
+    }
+  }
 }
