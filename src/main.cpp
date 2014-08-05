@@ -3,16 +3,20 @@
 
 #include "Parameters.hpp"
 
+#define DEBUG
+
+using std::cout;
+using std::endl;
+
 int main(int argc, char ** argv) {
   // initialize parameters /////////////////////////////////////////////////////
   Parameters p;
 
-  // initialize Hamiltonian ////////////////////////////////////////////////////
-
-  // initialize wavefunction/DM ////////////////////////////////////////////////
+#ifdef DEBUG
+  cout << "Memory usage of p: " << sizeof(p) << " bytes." << endl;
+#endif
 
   // propagate /////////////////////////////////////////////////////////////////
 
-  std::cout << "I am propellor, hear me roar." << std::endl;
   return 0;
 }
