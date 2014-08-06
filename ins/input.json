@@ -1,0 +1,48 @@
+{
+  "generalParams" : {
+    "timesteps" : 1000,
+    "endTime" : 1000,
+    "wavefunction" : true
+  },
+  "subunits" : [
+    {
+      "donor" : {
+        "type" : "qc",
+        "n" : 10,
+        "bandEdge" : 0.0,
+        "bandWidth" : 0.01,
+        "relax" : false
+      }
+    },
+    {
+      "bridge" : {
+        "type" : "ss",
+        "energy" : 0.005
+      }
+    },
+    {
+      "acceptor" : {
+        "type" : "qc",
+        "n" : 10,
+        "bandEdge" : 0.0,
+        "bandWidth" : 0.01,
+        "relax" : false
+      }
+    },
+  ],
+  "couplings" : [
+    {
+      "db" : {
+        "type" : "constant",
+        "value" : 0.001
+      }
+    },
+    {
+      "ba" : {
+        "subunits" : ["bridge", "acceptor"],
+        "type" : "constant",
+        "value" : 0.001
+      }
+    }
+  ]
+}
