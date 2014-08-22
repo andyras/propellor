@@ -4,23 +4,23 @@
     "endTime" : 1000,
     "wavefunction" : true
   },
-  "subunits" : [
-    {
+  "subunits" :
+  {
       "donor" : {
         "type" : "qc",
-        "n" : 10,
+        "n" : 50,
         "bandEdge" : 0.0,
         "bandWidth" : 0.01,
         "relax" : false
-      }
-    },
-    {
+      },
+
+
       "bridge" : {
         "type" : "ss",
+        "n" : 5,
         "energy" : 0.005
-      }
     },
-    {
+
       "acceptor" : {
         "type" : "qc",
         "n" : 10,
@@ -29,10 +29,10 @@
         "relax" : false
       }
     },
-  ],
   "couplings" : [
     {
       "db" : {
+        "subunits" : ["donor", "bridge"],
         "type" : "constant",
         "value" : 0.001
       }

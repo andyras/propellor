@@ -89,6 +89,8 @@ void Parameters::propagate() {
   if (isTimeIndependent()) {
     // time-independent propagation
     // diagonalize Ham_
+    SelfAdjointEigensolver<MatrixXcd> es(Ham_);
+    MatrixXcd evals = es.eigenvalues();
     if (isWavefunction()) {
       // TI wavefunction propagation
     }
